@@ -23,7 +23,7 @@ To get a local copy of this project, do the following:
 1. In your terminal, `cd` to the folder where you want to copy this project.
 2. Still in your terminal, type `git@github.com:Kingjosh007/to-do-list-minimalist.git` 
 3. Run `cd to-do-list-minimalist`
-4. Run `npm install && npm run build`
+4. Run `npm install && npm start`
 5. If your browser doesn't open automatically, open it manually and type `http://localhost:8080/` in the URL bar.
 
 ## Screenshots
