@@ -6,7 +6,9 @@
 
 body {
   background-color: #f7f5f7;
-  width: 100%;
+  width: 100vw;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 main {
@@ -103,7 +105,7 @@ main {
 }
 
 .toDoTask.bordered-btm {
-  border-bottom: 1px solid #8d8c8d;
+  border-bottom: 1px solid #eae8ea;
 }
 
 .toDoTask .leftSide {
@@ -111,8 +113,16 @@ main {
   gap: 15px;
 }
 
+.toDoTask .leftSide .markTaskCheckbox {
+  cursor: pointer;
+}
+
+.striken {
+  text-decoration: line-through;
+}
+
 .toDoTask .threeDots {
-  margin-right: 5px;
+  margin-right: 7px;
   font-size: 10px;
   color: #8d8c8d;
   cursor: move;
@@ -133,4 +143,8 @@ main {
   color: #5a5555;
   width: 100%;
   padding: 10px;
+}
+
+.toDoFooter:hover {
+  background: #ddd;
 }
