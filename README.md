@@ -28,7 +28,7 @@ To get a local copy of this project, do the following:
 
 ## Screenshot
 
-![Screenshot after milestone 1: list structure]('./screenshots/screenshot-1.PNG')
+![Screenshot after milestone 1: list structure](screenshots/screenshot-1.PNG)
 
 
 ## Built With
