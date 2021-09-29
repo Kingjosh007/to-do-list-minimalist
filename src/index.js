@@ -1,4 +1,4 @@
-import { saveToLocalStorage, getFromLocalStorage } from './storage.js';
+import { saveToLocalStorage, getFromLocalStorage, updateTask } from './storage.js';
 import './style.css';
 
 const tasks = [
@@ -19,6 +19,9 @@ const tasks = [
   },
 ];
 
+saveToLocalStorage('tasks', tasks);
+const localTasks = getFromLocalStorage('tasks') || tasks;
+
 const codeForTask = (task, i, tasks) => {
   const additionalClass = (i !== (tasks.length - 1)) ? 'bordered-btm' : '';
   const checkd = task.completed ? 'checked' : '';
@@ -34,9 +37,7 @@ const codeForTask = (task, i, tasks) => {
 };
 
 function displayTasks() {
-  const allTasksCode = tasks.sort((a, b) => a.index - b.index)
+  const allTasksCode = localTasks.sort((a, b) => a.index - b.index)
     .map((el, i, w) => codeForTask(el, i, w));
   document.querySelector('.toDoBody').innerHTML = allTasksCode.join('');
 }
-
-displayTasks();
