@@ -33,7 +33,8 @@ const codeForTask = (task, i, tasks) => {
 };
 
 function displayTasks() {
-  const allTasksCode = tasks.map((el, i, w) => codeForTask(el, i, w));
+  const allTasksCode = tasks.sort((a, b) => a.index - b.index)
+    .map((el, i, w) => codeForTask(el, i, w));
   document.querySelector('.toDoBody').innerHTML = allTasksCode.join('');
 }
 
