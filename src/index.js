@@ -19,25 +19,41 @@ const tasks = [
   },
 ];
 
-saveToLocalStorage('tasks', tasks);
-const localTasks = getFromLocalStorage('tasks') || tasks;
+let localTasks = getFromLocalStorage('tasks') || tasks;
 
 const codeForTask = (task, i, tasks) => {
   const additionalClass = (i !== (tasks.length - 1)) ? 'bordered-btm' : '';
   const checkd = task.completed ? 'checked' : '';
   const striken = task.completed ? 'striken' : '';
 
-  return `<li class="toDoTask ${additionalClass}" data-id="${task.index}">
-                <div class="leftSide" data-id="${task.index}">
-                <input type="checkbox" class="markTaskCheckbox" data-id="${task.index}" ${checkd} />
-                <div class="taskName ${striken}" data-id="${task.index}">${task.description}</div>
+  return `<li class="toDoTask ${additionalClass}" data-index="${task.index}">
+                <div class="leftSide" data-index="${task.index}">
+                <input type="checkbox" class="markTaskCheckbox" data-index="${task.index}" ${checkd} />
+                <div class="taskName ${striken}" data-index="${task.index}">${task.description}</div>
                 </div>
-                <div class="threeDots" data-id="${task.index}"><i class="fas fa-ellipsis-v" data-id="${task.index}"></i></div>
+                <div class="threeDots" data-index="${task.index}"><i class="fas fa-ellipsis-v" data-index="${task.index}"></i></div>
             </li>`;
 };
 
+function addCheckListener() {
+  const checkBoxes = document.querySelectorAll('.markTaskCheckbox');
+  for (let i = 0; i < checkBoxes.length; i += 1) {
+    // eslint-disable-next-line no-loop-func
+    checkBoxes[i].addEventListener('change', (e) => {
+      const index = e.target.getAttribute('data-index');
+      const updatedTasks = updateTask(index, localTasks);
+      saveToLocalStorage('tasks', updatedTasks);
+      localTasks = getFromLocalStorage('tasks');
+      // eslint-disable-next-line no-use-before-define
+      displayTasks();
+    });
+  }
+}
 function displayTasks() {
   const allTasksCode = localTasks.sort((a, b) => a.index - b.index)
     .map((el, i, w) => codeForTask(el, i, w));
   document.querySelector('.toDoBody').innerHTML = allTasksCode.join('');
+  addCheckListener();
 }
+
+displayTasks();
