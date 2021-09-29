@@ -7,8 +7,8 @@
 
 This project was divided into three (3) parts. Refer to the corresponding branch. The branch in bold is the one I am working on. 
 
-1. **List structure**
-2. Interactive list
+1. List structure
+2. **Interactive list**
 3. Add and remove items
 
 ## Live Demo
