@@ -1,3 +1,4 @@
+import { saveToLocalStorage, getFromLocalStorage } from './storage.js';
 import './style.css';
 
 const tasks = [
