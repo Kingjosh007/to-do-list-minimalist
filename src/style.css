@@ -1,11 +1,136 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+} 
+
 body {
+  background-color: #f7f5f7;
+  width: 100%;
+}
+
+main {
+  margin-top: 4em;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #toDoContainer {
-  width: 50%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  background: #fff;
+  width: auto;
+  padding-inline: 0;
+  min-width: 40%;
+  max-width: 80%;
+  border: 1px solid gray;
+  box-shadow: 5px 10px 8px #888;
+}
+
+#toDoContainer > * {
+  padding-block: 5px;
+}
+
+.toDoHeader {
+  display: flex;
+  flex-direction: row;
+  padding-inline: 10px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid #8d8c8d;
+}
+
+.toDoHeader .toDoTitle {
+  color: #504f43;
+  font-weight: bold;
+  padding-block: 10px;
+}
+
+.toDoHeader .refreshIcon {
+  color: #8d8c8d;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.toDoAdd {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 7px;
+  border-bottom: 1px solid #eae8ea;
+}
+
+.toDoAdd input {
+  border: none transparent;
+  background: transparent;
+  outline: none;
+  font-style: normal;
+  font-weight: bold;
+  padding-block: 10px;
+}
+
+.toDoAdd input:placeholder-shown {
+  font-style: italic;
+  font-weight: normal;
+}
+
+.toDoAdd .enterIcon {
+  margin-right: 5px;
+  cursor: pointer;
+  font-size: 10px;
+  color: #8d8c8d;
+}
+
+.toDoBody {
+  width: 100%;
+  padding-block: 0;
+  padding-inline: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.toDoTask {
+  padding-inline: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 10px;
+  width: 100%;
+}
+
+.toDoTask.bordered-btm {
+  border-bottom: 1px solid #8d8c8d;
+}
+
+.toDoTask .leftSide {
+  display: flex;
+  gap: 15px;
+}
+
+.toDoTask .threeDots {
+  margin-right: 5px;
+  font-size: 10px;
+  color: #8d8c8d;
+  cursor: move;
+}
+
+.toDoFooter {
+  width: 100%;
+  cursor: pointer;
+  margin-inline: 0;
+  padding-inline: 0;
+  background: #eeecee;
+  border: 1px solid #8d8c8d;
+  text-align: center;
+}
+
+.toDoFooter .clearBtn {
+  display: block;
+  color: #5a5555;
+  width: 100%;
+  padding: 10px;
 }
