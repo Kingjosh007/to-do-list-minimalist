@@ -3,8 +3,6 @@ name: Build and GH-Page Deploy
 on:
   push:
     branches:
-      - main
-      - gh-pages
       - 1-list-structure
 
 jobs:
