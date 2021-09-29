@@ -3,9 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webpack Exercise</title>
+    <title>To-do List (inspired from Minimalist)</title>
 </head>
 <body>
-    <h1>Hello webpack!</h1>
+    <main>
+    <div id="toDoContainer">
+        <div class="toDoHeader">
+            <div class="toDoTitle">Today's To Do</div>
+            <div class="refreshIcon"><i class="fas fa-sync-alt"></i></div>
+        </div>
+        <div class="toDoAdd">
+            
+            <form name="addTaskForm">
+                <input name="name" type="text" placeholder="Add to your list..."/>
+            </form>
+            <div class="enterIcon">
+                <i class="fas fa-level-down-alt"></i>
+            </div>
+        </div>
+        <ul class="toDoBody">
+            <li class="toDoTask bordered-btm" data-id="1">
+                <div class="leftSide" data-id="1">
+                <input type="checkbox" class="markTaskCheckbox" data-id="1" />
+                <div class="taskName" data-id="1">Wash dishes</div>
+                </div>
+                <div class="threeDots" data-id="1"><i class="fas fa-ellipsis-v"></i></div>
+            </li>
+            <li class="toDoTask" data-id="2">
+                <div class="leftSide" data-id="2">
+                <input type="checkbox" class="markTaskCheckbox" data-id="2" />
+                <div class="taskName" data-id="2">Complete To-Do List project</div>
+                </div>
+                <div class="threeDots" data-id="2"><i class="fas fa-ellipsis-v"></i></div>
+            </li>
+        </ul>
+        <div class="toDoFooter">
+            <div class="clearBtn">Clear all completed</div>
+        </div>
+    </div>
+</main>
+
+<!-- Font Awesome 5 -->
+<script src="https://kit.fontawesome.com/c397284221.js" crossorigin="anonymous"></script>
 </body>
 </html>

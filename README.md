@@ -7,7 +7,7 @@
 
 This project was divided into three (3) parts. Refer to the corresponding branch. The branch in bold is the one I am working on. 
 
-1. List structure
+1. **List structure**
 2. Interactive list
 3. Add and remove items
 
@@ -26,7 +26,9 @@ To get a local copy of this project, do the following:
 4. Run `npm install && npm start`
 5. If your browser doesn't open automatically, open it manually and type `http://localhost:8080/` in the URL bar.
 
-## Screenshots
+## Screenshot
+
+![Screenshot after milestone 1: list structure](screenshots/screenshot-1.PNG)
 
 
 ## Built With
