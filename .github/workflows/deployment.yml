@@ -1,0 +1,30 @@
+name: Build and GH-Page Deploy
+
+on:
+  push:
+    branches:
+      - main
+      - gh-pages
+      - 1-list-structure
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Install
+        run: npm install
+
+      - name: Build
+        run: |
+          npm run build
+
+      - name: Deploy to GH Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          branch: gh-pages
+          folder: dist
