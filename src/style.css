@@ -117,6 +117,11 @@ main {
   cursor: pointer;
 }
 
+.draggable.dragging {
+  border: 2px solid blue;
+  opacity: 0.7;
+}
+
 .striken {
   text-decoration: line-through;
 }
@@ -125,7 +130,6 @@ main {
   margin-right: 7px;
   font-size: 10px;
   color: #8d8c8d;
-  cursor: move;
 }
 
 .toDoFooter {
