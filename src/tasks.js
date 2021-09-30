@@ -1,4 +1,5 @@
 import { saveToLocalStorage, getFromLocalStorage, updateTaskCompletion } from './storage.js';
+import { dragListener } from './drag-drop.js';
 
 export const tasks = [
   {
@@ -32,7 +33,7 @@ const codeForTask = (task, i, tasks) => {
               </li>`;
 };
 
-export function addCheckListener(callback) {
+export function addCheckListener() {
   const checkBoxes = document.querySelectorAll('.markTaskCheckbox');
   for (let i = 0; i < checkBoxes.length; i += 1) {
     // eslint-disable-next-line no-loop-func
@@ -41,14 +42,15 @@ export function addCheckListener(callback) {
       const updatedTasks = updateTaskCompletion(index, getFromLocalStorage('tasks'));
       saveToLocalStorage('tasks', updatedTasks);
       // eslint-disable-next-line no-use-before-define
-      callback();
+      displayTasks(getFromLocalStorage('tasks'));
     });
   }
 }
 
-export function displayTasks(tasksArr = getFromLocalStorage('tasks') || [], callback = addCheckListener) {
+export function displayTasks(tasksArr = getFromLocalStorage('tasks') || []) {
   const allTasksCode = tasksArr.sort((a, b) => a.index - b.index)
     .map((el, i, w) => codeForTask(el, i, w));
   document.querySelector('.toDoBody').innerHTML = allTasksCode.join('');
-  callback();
+  addCheckListener();
+  dragListener();
 }
