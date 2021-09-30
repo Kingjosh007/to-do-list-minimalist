@@ -1,4 +1,6 @@
-import { saveToLocalStorage, getFromLocalStorage, updateTaskCompletion } from './storage.js';
+import {
+  saveToLocalStorage, getFromLocalStorage, updateTaskCompletion, updateIndexes,
+} from './storage.js';
 import { dragListener } from './drag-drop.js';
 
 const codeForTask = (task, i, tasks) => {
@@ -9,7 +11,7 @@ const codeForTask = (task, i, tasks) => {
   return `<li class="toDoTask ${additionalClass} draggable" data-index="${task.index}" draggable="true">
                   <div class="leftSide" data-index="${task.index}">
                   <input type="checkbox" class="markTaskCheckbox" data-index="${task.index}" ${checkd} />
-                  <div class="taskName ${striken}" data-index="${task.index}">${task.description}</div>
+                  <div class="taskName ${striken}" data-index="${task.index}" contenteditable>${task.description}</div>
                   </div>
                   <div class="threeDots" data-index="${task.index}"><i class="fas fa-ellipsis-v" data-index="${task.index}"></i></div>
               </li>`;
@@ -29,10 +31,64 @@ export function addCheckListener() {
   }
 }
 
+export function addContentChangeFeature() {
+  const allDOMTaskNames = document.querySelectorAll('.taskName');
+  allDOMTaskNames.forEach((tn) => {
+    tn.addEventListener('focus', () => {
+      tn.style.outline = 'none';
+      tn.parentElement.parentElement.style.backgroundColor = '#fffdd0';
+    });
+    tn.addEventListener('blur', () => {
+      tn.parentElement.parentElement.style.backgroundColor = '#fff';
+    });
+  });
+}
+
 export function displayTasks(tasksArr = getFromLocalStorage('tasks') || []) {
   const allTasksCode = tasksArr.sort((a, b) => a.index - b.index)
     .map((el, i, w) => codeForTask(el, i, w));
   document.querySelector('.toDoBody').innerHTML = allTasksCode.join('');
   addCheckListener();
+  addContentChangeFeature();
   dragListener(displayTasks);
 }
+
+function addTask(taskName) {
+  let allTasks = getFromLocalStorage('tasks') || [];
+  const newTask = { index: 0, description: taskName, completed: false };
+  allTasks.push(newTask);
+  allTasks = updateIndexes(allTasks);
+  saveToLocalStorage('tasks', allTasks);
+}
+
+function clearCompletedTasks() {
+  let allTasks = getFromLocalStorage('tasks') || [];
+  if (allTasks.length > 0) {
+    allTasks = allTasks.filter((t) => !t.completed);
+    allTasks = updateIndexes(allTasks);
+    saveToLocalStorage('tasks', allTasks);
+  }
+}
+
+const { addTaskForm } = document.forms;
+const addIcon = document.querySelector('.enterIcon');
+const refreshIcon = document.querySelector('.refreshIcon');
+const clearBtn = document.querySelector('.clearBtn');
+
+function handleAddTaskOnForm(e) {
+  e.preventDefault();
+  const taskName = addTaskForm.name.value.trim();
+  if (taskName.length > 0) {
+    addTask(taskName);
+    addTaskForm.name.value = '';
+    displayTasks();
+  }
+}
+
+refreshIcon.addEventListener('click', displayTasks);
+addTaskForm.addEventListener('submit', handleAddTaskOnForm);
+addIcon.addEventListener('click', handleAddTaskOnForm);
+clearBtn.addEventListener('click', () => {
+  clearCompletedTasks();
+  displayTasks();
+});
