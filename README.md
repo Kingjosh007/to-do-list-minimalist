@@ -1,9 +1,9 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
 
-# To-do List (inspired from Minimalist)
+# To-do List (inspired by Minimalist)
 
-> "To-do List (inspired from Minimalist)" is a simple yet powerful to-do list inspired from the Minimalist website which is no longer online, but of which you can see an archive [here](https://web.archive.org/web/20180320194056/http://www.getminimalist.com:80/). The ultimate goal of this project was to build a replica of a website using the recently learned ES6 and Webpack concepts.
+> "To-do List (inspired from Minimalist)" is a simple yet powerful to-do list inspired by the Minimalist website which is no longer online, but of which you can see an archive [here](https://web.archive.org/web/20180320194056/http://www.getminimalist.com:80/). The ultimate goal of this project was to build a replica of a website using the recently learned ES6 and Webpack concepts.
 
 This project was divided into three (3) parts. Refer to the corresponding branch. The branch in bold is the one I am working on. 
 
