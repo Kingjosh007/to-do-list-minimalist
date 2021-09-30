@@ -1,24 +1,6 @@
 import { saveToLocalStorage, getFromLocalStorage, updateTaskCompletion } from './storage.js';
 import { dragListener } from './drag-drop.js';
 
-export const tasks = [
-  {
-    index: 1,
-    description: 'Wash dishes',
-    completed: true,
-  },
-  {
-    index: 2,
-    description: 'Complete To-Do List project',
-    completed: false,
-  },
-  {
-    index: 3,
-    description: 'Play game',
-    completed: false,
-  },
-];
-
 const codeForTask = (task, i, tasks) => {
   const additionalClass = (i !== (tasks.length - 1)) ? 'bordered-btm' : '';
   const checkd = task.completed ? 'checked' : '';
