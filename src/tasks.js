@@ -52,5 +52,5 @@ export function displayTasks(tasksArr = getFromLocalStorage('tasks') || []) {
     .map((el, i, w) => codeForTask(el, i, w));
   document.querySelector('.toDoBody').innerHTML = allTasksCode.join('');
   addCheckListener();
-  dragListener();
+  dragListener(displayTasks);
 }
