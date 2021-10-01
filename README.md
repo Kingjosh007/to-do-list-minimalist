@@ -8,8 +8,8 @@
 This project was divided into three (3) parts. Refer to the corresponding branch. The branch in bold is the one I am working on. 
 
 1. List structure
-2. **Interactive list**
-3. Add and remove items
+2. Interactive list
+3. **Add and remove items**
 
 ## Live Demo
 
@@ -28,7 +28,7 @@ To get a local copy of this project, do the following:
 
 ## Screenshot
 
-![Screenshot after milestone 1: list structure](screenshots/screenshot-2.gif)
+![Screenshot after milestone 3: Add, edit, remove](screenshots/screenshot-3.gif)
 
 
 ## Built With
