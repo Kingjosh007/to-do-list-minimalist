@@ -28,7 +28,7 @@ To get a local copy of this project, do the following:
 
 ## Screenshot
 
-![Screenshot after milestone 1: list structure](screenshots/screenshot-2.gif)
+![Screenshot after milestone 2: Interactive list](screenshots/screenshot-2.gif)
 
 
 ## Built With
