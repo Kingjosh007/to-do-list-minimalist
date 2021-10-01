@@ -46,7 +46,7 @@ main {
 }
 
 .toDoHeader .toDoTitle {
-  color: #504f43;
+  color: #2b2a27;
   font-weight: bold;
   padding-block: 10px;
 }
@@ -126,10 +126,29 @@ main {
   text-decoration: line-through;
 }
 
-.toDoTask .threeDots {
+.toDoTask .otherIcons {
   margin-right: 7px;
-  font-size: 10px;
+  font-size: 13px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.otherIcons div {
   color: #8d8c8d;
+  cursor: pointer;
+}
+
+.otherIcons div:hover {
+  transform: scale(1.5);
+}
+
+.otherIcons div.hide {
+  display: none;
+}
+
+.otherIcons div.show {
+  display: block;
 }
 
 .toDoFooter {
@@ -151,4 +170,8 @@ main {
 
 .toDoFooter:hover {
   background: #ddd;
+}
+
+.toDoFooter:hover .clearBtn {
+  color: #2b2a27;
 }

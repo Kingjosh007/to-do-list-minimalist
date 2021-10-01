@@ -13,7 +13,10 @@ const codeForTask = (task, i, tasks) => {
                   <input type="checkbox" class="markTaskCheckbox" data-index="${task.index}" ${checkd} />
                   <div class="taskName ${striken}" data-index="${task.index}" contenteditable>${task.description}</div>
                   </div>
-                  <div class="threeDots" data-index="${task.index}"><i class="fas fa-ellipsis-v" data-index="${task.index}"></i></div>
+                  <div class="otherIcons" data-index="${task.index}">
+                  <div class="deleteIcon hide" data-index="${task.index}"><i class="far fa-trash-alt" data-index="${task.index}"></i></div>
+                  <div class="threeDots show" data-index="${task.index}"><i class="fas fa-ellipsis-v" data-index="${task.index}"></i></div>
+                  </div>
               </li>`;
 };
 
