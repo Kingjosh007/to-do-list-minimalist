@@ -41,16 +41,29 @@ function deleteTask(index) {
   saveToLocalStorage('tasks', allTasks);
 }
 
+function handleClickOutsideEl(el, callback) {
+  document.addEventListener('click', (event) => {
+    const isClickInsideElement = el.contains(event.target);
+    if (!isClickInsideElement) {
+      callback();
+    }
+  });
+}
 function addDotsListener() {
   const allThreeDots = document.querySelectorAll('.threeDots');
   allThreeDots.forEach((td) => {
-    td.addEventListener('click', (e) => {
-      const taskInd = Number(e.target.getAttribute('data-index'));
-      document.querySelectorAll('.threeDots').forEach((tdd) => () => {
-        tdd.parentElement.parentElement.style.backgroundColor = '#fff';
-      });
+    const taskInd = Number(td.getAttribute('data-index'));
+    td.addEventListener('click', () => {
       td.parentElement.parentElement.style.backgroundColor = '#fffdd0';
       td.parentElement.querySelector('.deleteIcon').classList.replace('hide', 'show');
+
+      handleClickOutsideEl(td.parentElement, () => {
+        td.parentElement.parentElement.style.backgroundColor = '#fff';
+        td.parentElement.querySelector('.threeDots').classList.replace('hide', 'show');
+        td.parentElement.querySelector('.deleteIcon').classList.replace('show', 'hide');
+        document.removeEventListener('click', handleClickOutsideEl);
+      });
+
       td.parentElement.querySelector('.deleteIcon').addEventListener('click', () => {
         deleteTask(taskInd);
         // eslint-disable-next-line no-use-before-define
