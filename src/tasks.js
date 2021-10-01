@@ -34,8 +34,35 @@ export function addCheckListener() {
   }
 }
 
+function deleteTask(index) {
+  let allTasks = getFromLocalStorage('tasks') || [];
+  allTasks = allTasks.filter((t) => Number(t.index) !== Number(index));
+  allTasks = updateIndexes(allTasks);
+  saveToLocalStorage('tasks', allTasks);
+}
+
+function addDotsListener() {
+  const allThreeDots = document.querySelectorAll('.threeDots');
+  allThreeDots.forEach((td) => {
+    td.addEventListener('click', (e) => {
+      const taskInd = Number(e.getAttribute('data-index'));
+      document.querySelectorAll('.threeDots').forEach((tdd) => () => {
+        tdd.parentElement.parentElement.style.backgroundColor = '#fff';
+      });
+      td.parentElement.parentElement.style.backgroundColor = '#fffdd0';
+      td.parentElement.querySelector('.deleteIcon').classList.replace('hide', 'show');
+      td.parentElement.querySelectorAll('.deleteIcon').addEventListener('click', () => {
+        deleteTask(taskInd);
+        // eslint-disable-next-line no-use-before-define
+        displayTasks();
+      });
+      td.classList.replace('show', 'hide');
+    });
+  });
+}
+
 function updateTaskName(taskInd, newName) {
-  let allTasks = getFromLocalStorage('tasks');
+  let allTasks = getFromLocalStorage('tasks') || [];
   const thisTask = allTasks.find((t) => t.index === taskInd);
   thisTask.description = newName;
   allTasks = allTasks.filter((t) => t.index !== taskInd);
@@ -78,6 +105,7 @@ export function displayTasks(tasksArr = getFromLocalStorage('tasks') || []) {
   document.querySelector('.toDoBody').innerHTML = allTasksCode.join('');
   addCheckListener();
   addContentChangeFeature();
+  addDotsListener();
   dragListener(displayTasks);
 }
 
