@@ -31,15 +31,40 @@ export function addCheckListener() {
   }
 }
 
+function updateTaskName(taskInd, newName) {
+  let allTasks = getFromLocalStorage('tasks');
+  const thisTask = allTasks.find((t) => t.index === taskInd);
+  thisTask.description = newName;
+  allTasks = allTasks.filter((t) => t.index !== taskInd);
+  allTasks.push(thisTask);
+  saveToLocalStorage('tasks', allTasks);
+}
+
 export function addContentChangeFeature() {
   const allDOMTaskNames = document.querySelectorAll('.taskName');
   allDOMTaskNames.forEach((tn) => {
+    const taskInd = Number(tn.getAttribute('data-index'));
     tn.addEventListener('focus', () => {
       tn.style.outline = 'none';
       tn.parentElement.parentElement.style.backgroundColor = '#fffdd0';
+      tn.addEventListener('keydown', (e) => {
+        const { key } = e;
+        if (key === 'Enter' || key === 'Escape') {
+          const newName = tn.textContent;
+          tn.parentElement.parentElement.style.backgroundColor = '#fff';
+          updateTaskName(taskInd, newName);
+          // eslint-disable-next-line no-use-before-define
+          displayTasks();
+        }
+      });
     });
+
     tn.addEventListener('blur', () => {
+      const newName = tn.textContent;
       tn.parentElement.parentElement.style.backgroundColor = '#fff';
+      updateTaskName(taskInd, newName);
+      // eslint-disable-next-line no-use-before-define
+      displayTasks();
     });
   });
 }
