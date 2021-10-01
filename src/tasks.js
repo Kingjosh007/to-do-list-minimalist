@@ -37,7 +37,7 @@ function updateTaskName(taskInd, newName) {
   thisTask.description = newName;
   allTasks = allTasks.filter((t) => t.index !== taskInd);
   allTasks.push(thisTask);
-  saveToLocalStorage('tasks', allTasks);
+  saveToLocalStorage('tasks', allTasks.sort((a, b) => a.index - b.index));
 }
 
 export function addContentChangeFeature() {
