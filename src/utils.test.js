@@ -69,3 +69,14 @@ describe('Add task to localStorage', () => {
     expect(() => addTask('task2')).toThrow(Error);
   });
 });
+
+describe('Delete task from localStorage', () => {
+  test('deletes properly when index is valid', () => {
+    const tasks = ['task1', 'task2', 'task whatever', 'read book', 'eat something', 'play a game'];
+    tasks.forEach((task) => addTask(task));
+    deleteTask(1);
+    const tasksAfterDeletion = getFromLocalStorage('tasks');
+    const tasksNamesAfterDeletion = tasksAfterDeletion.map((t) => t.description);
+    expect(tasksNamesAfterDeletion).not.toContain('task1');
+  });
+});
