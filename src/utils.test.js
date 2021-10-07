@@ -45,4 +45,21 @@ describe('can add task to localStorage', () => {
     expect(allSavedTasks.length).toBe(tasks.length);
     expect(tasks.every((task) => (allTasksNames).includes(task))).toBeTruthy();
   });
+
+  test('no duplicate index', () => {
+    const tasks = ['task1', 'task2', 'task whaterver', 'read book', 'eat something', 'play a game', 'task1', 'task2'];
+    tasks.forEach((task) => addTask(task));
+    const allSavedTasks = getFromLocalStorage('tasks');
+    const allTasksIndexes = allSavedTasks.map((t) => t.index);
+
+    expect([...new Set(allTasksIndexes)].length).toBe(allTasksIndexes.length);
+  });
+
+  test('no duplicate task name', () => {
+    const tasks = ['task1', 'task2', 'task whaterver', 'read book', 'eat something', 'play a game', 'task1', 'task2'];
+    tasks.forEach((task) => addTask(task));
+    const allSavedTasks = getFromLocalStorage('tasks');
+    const allTasksNames = allSavedTasks.map((t) => t.description);
+    expect([...new Set(allTasksNames)].length).toBe(allTasksNames.length);
+  });
 });
