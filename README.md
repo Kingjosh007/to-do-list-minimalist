@@ -9,7 +9,12 @@ This project was divided into three (3) parts. Refer to the corresponding branch
 
 1. List structure
 2. Interactive list
-3. **Add and remove items**
+3. Add and remove items
+
+Later, I had to create a couple additional branches for testing purposes (using Jest):
+
+4. **Testing add and remove functions**
+5. Testing status updates and repositioning of items
 
 ## Live Demo
 
