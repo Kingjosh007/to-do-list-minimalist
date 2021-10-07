@@ -1,6 +1,7 @@
 import {
   saveToLocalStorage, getFromLocalStorage, updateTaskCompletion, updateIndexes,
 } from './storage.js';
+import { addTask, deleteTask } from './utils.js';
 import { dragListener } from './drag-drop.js';
 
 const codeForTask = (task, i, tasks) => {
@@ -32,13 +33,6 @@ export function addCheckListener() {
       displayTasks(getFromLocalStorage('tasks'));
     });
   }
-}
-
-function deleteTask(index) {
-  let allTasks = getFromLocalStorage('tasks') || [];
-  allTasks = allTasks.filter((t) => Number(t.index) !== Number(index));
-  allTasks = updateIndexes(allTasks);
-  saveToLocalStorage('tasks', allTasks);
 }
 
 function handleClickOutsideEl(el, callback) {
@@ -120,14 +114,6 @@ export function displayTasks(tasksArr = getFromLocalStorage('tasks') || []) {
   addContentChangeFeature();
   addDotsListener();
   dragListener(displayTasks);
-}
-
-function addTask(taskName) {
-  let allTasks = getFromLocalStorage('tasks') || [];
-  const newTask = { index: 0, description: taskName, completed: false };
-  allTasks.push(newTask);
-  allTasks = updateIndexes(allTasks);
-  saveToLocalStorage('tasks', allTasks);
 }
 
 function clearCompletedTasks() {
