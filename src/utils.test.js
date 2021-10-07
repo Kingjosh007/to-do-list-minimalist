@@ -63,10 +63,11 @@ describe('Add task to localStorage', () => {
     expect([...new Set(allTasksNames)].length).toBe(allTasksNames.length);
   });
 
-  test('throws exception when trying to add duplicate task', () => {
+  test('throws an error when trying to add duplicate task', () => {
     const tasks = ['task1', 'task2', 'task whatever'];
     tasks.forEach((task) => addTask(task));
     expect(() => addTask('task2')).toThrow(Error);
+    expect(() => addTask('task2')).toThrow(/NO_DUPLICATE_TASK/);
   });
 });
 
@@ -78,5 +79,13 @@ describe('Delete task from localStorage', () => {
     const tasksAfterDeletion = getFromLocalStorage('tasks');
     const tasksNamesAfterDeletion = tasksAfterDeletion.map((t) => t.description);
     expect(tasksNamesAfterDeletion).not.toContain('task1');
+  });
+  test('throws an error when trying to delete unvalid index', () => {
+    const tasks = ['task1', 'task2', 'task whatever', 'read book', 'eat something', 'play a game'];
+    tasks.forEach((task) => addTask(task));
+    expect(() => deleteTask(tasks.length + 1)).toThrow(Error);
+    expect(() => deleteTask(tasks.length + 1)).toThrow(/INVALID_INDEX/);
+    expect(() => deleteTask('2')).toThrow(Error);
+    expect(() => deleteTask('2')).toThrow(/INVALID_INDEX/);
   });
 });

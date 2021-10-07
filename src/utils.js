@@ -14,9 +14,14 @@ function addTask(taskName) {
 
 function deleteTask(index) {
   let allTasks = getFromLocalStorage('tasks') || [];
-  allTasks = allTasks.filter((t) => Number(t.index) !== Number(index));
-  allTasks = updateIndexes(allTasks);
-  saveToLocalStorage('tasks', allTasks);
+  const isValidIndex = (typeof index === 'number') && index >= 1 && index <= allTasks.length;
+  if (isValidIndex) {
+    allTasks = allTasks.filter((t) => Number(t.index) !== Number(index));
+    allTasks = updateIndexes(allTasks);
+    saveToLocalStorage('tasks', allTasks);
+  } else {
+    throw new Error('INVALID_INDEX: You are trying to delete an invalid index.');
+  }
 }
 
 export { addTask, deleteTask };
