@@ -25,13 +25,13 @@ function storageMock() {
 }
 
 let localStorage = storageMock();
-global.localStorage = localStorage;
 
 beforeEach(() => {
   localStorage = storageMock();
+  global.localStorage = localStorage;
 });
 
-describe('can add task to localStorage', () => {
+describe('Add task to localStorage', () => {
   test('localStorage is empty when nothing added', () => {
     expect(getFromLocalStorage('tasks')).toBeNull();
   });
@@ -47,7 +47,7 @@ describe('can add task to localStorage', () => {
   });
 
   test('no duplicate index', () => {
-    const tasks = ['task1', 'task2', 'task whaterver', 'read book', 'eat something', 'play a game', 'task1', 'task2'];
+    const tasks = ['task1', 'task2', 'task whatever', 'read book', 'eat something', 'play a game'];
     tasks.forEach((task) => addTask(task));
     const allSavedTasks = getFromLocalStorage('tasks');
     const allTasksIndexes = allSavedTasks.map((t) => t.index);
@@ -56,10 +56,16 @@ describe('can add task to localStorage', () => {
   });
 
   test('no duplicate task name', () => {
-    const tasks = ['task1', 'task2', 'task whaterver', 'read book', 'eat something', 'play a game', 'task1', 'task2'];
+    const tasks = ['task1', 'task2', 'task whatever', 'read book', 'eat something', 'play a game'];
     tasks.forEach((task) => addTask(task));
     const allSavedTasks = getFromLocalStorage('tasks');
     const allTasksNames = allSavedTasks.map((t) => t.description);
     expect([...new Set(allTasksNames)].length).toBe(allTasksNames.length);
+  });
+
+  test('throws exception when trying to add duplicate task', () => {
+    const tasks = ['task1', 'task2', 'task whatever'];
+    tasks.forEach((task) => addTask(task));
+    expect(() => addTask('task2')).toThrow(Error);
   });
 });
