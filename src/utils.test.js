@@ -1,7 +1,7 @@
 import {
   addTask, deleteTask, updateTaskName, deepEqual,
 } from './utils.js';
-import { getFromLocalStorage } from './storage.js';
+import { getFromLocalStorage, updateTaskCompletion } from './storage.js';
 
 function storageMock() {
   const storage = {};
@@ -156,5 +156,18 @@ describe('Edit task name', () => {
     tasks.forEach((task) => addTask(task));
     expect(() => updateTaskName(tasks.length + 1, 'whatever')).toThrow(Error);
     expect(() => updateTaskName(tasks.length + 1, 'whatever')).toThrow(/UNEXISTING_TASK/);
+  });
+});
+
+describe('Update completed status', () => {
+  test('completed property becomes true if it was false', () => {
+    const tasks = ['task1', 'task2', 'task whatever', 'read book', 'eat something', 'play a game'];
+    tasks.forEach((task) => addTask(task));
+    const index = Math.ceil(Math.random() * tasks.length);
+    const oldTasks = getFromLocalStorage('tasks');
+    const tBefore = oldTasks[index];
+    const newTasks = updateTaskCompletion(index, oldTasks);
+    const tAfter = newTasks.find((t) => t.index === index);
+    expect(tBefore.completed === tAfter.completed).toBeFalsy();
   });
 });
