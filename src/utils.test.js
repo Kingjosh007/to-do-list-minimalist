@@ -160,7 +160,21 @@ describe('Edit task name', () => {
 });
 
 describe('Update completed status', () => {
-  test('completed property becomes true if it was false', () => {
+  test('completed property is always a boolean', () => {
+    const tasks = ['task1', 'task2', 'task whatever', 'read book', 'eat something', 'play a game'];
+    tasks.forEach((task) => addTask(task));
+    const oldTasks = getFromLocalStorage('tasks');
+    let newTasks = oldTasks;
+    oldTasks.forEach((t) => {
+      newTasks = updateTaskCompletion(t.index, newTasks);
+    });
+
+    // eslint-disable-next-line no-prototype-builtins
+    expect(oldTasks.every((t) => t.hasOwnProperty('completed') && typeof t.completed === 'boolean')).toBeTruthy();
+    // eslint-disable-next-line no-prototype-builtins
+    expect(newTasks.every((t) => t.hasOwnProperty('completed') && typeof t.completed === 'boolean')).toBeTruthy();
+  });
+  test('completed property becomes true if it was false and vice-versa', () => {
     const tasks = ['task1', 'task2', 'task whatever', 'read book', 'eat something', 'play a game'];
     tasks.forEach((task) => addTask(task));
     const index = Math.ceil(Math.random() * tasks.length);
