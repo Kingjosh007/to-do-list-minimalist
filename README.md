@@ -13,8 +13,8 @@ This project was divided into three (3) parts. Refer to the corresponding branch
 
 Later, I had to create a couple additional branches for testing purposes (using Jest):
 
-4. **Testing add and remove functions**
-5. Testing status updates and repositioning of items
+4. Testing add and remove functions
+5. **Testing edit task, status updates and repositioning of items, clear all completed**
 
 ## Live Demo
 
@@ -37,9 +37,9 @@ To get a local copy of this project, do the following:
 
 ![Screenshot after milestone 3: Add, edit, remove](screenshots/screenshot-3.gif)
 
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; **Tests (using Jest)**
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; **Tests (using Jest)**
 
-![Screenshot after milestone 4: Testing add and delete using Jest](screenshots/screenshot-4.gif)
+![Screenshot after milestone 5: All tests using Jest](screenshots/screenshot-5.PNG)
 
 ## Built With
 

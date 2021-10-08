@@ -1,25 +1,10 @@
 import {
-  saveToLocalStorage, getFromLocalStorage, updateTaskCompletion, updateIndexes,
+  saveToLocalStorage, getFromLocalStorage, updateTaskCompletion,
 } from './storage.js';
-import { addTask, deleteTask } from './utils.js';
+import {
+  codeForTask, addTask, deleteTask, updateTaskName, clearCompletedTasks,
+} from './utils.js';
 import { dragListener } from './drag-drop.js';
-
-const codeForTask = (task, i, tasks) => {
-  const additionalClass = (i !== (tasks.length - 1)) ? 'bordered-btm' : '';
-  const checkd = task.completed ? 'checked' : '';
-  const striken = task.completed ? 'striken' : '';
-
-  return `<li class="toDoTask ${additionalClass} draggable" data-index="${task.index}" draggable="true">
-                  <div class="leftSide" data-index="${task.index}">
-                  <input type="checkbox" class="markTaskCheckbox" data-index="${task.index}" ${checkd} />
-                  <div class="taskName ${striken}" data-index="${task.index}" contenteditable>${task.description}</div>
-                  </div>
-                  <div class="otherIcons" data-index="${task.index}">
-                  <div class="deleteIcon hide" data-index="${task.index}"><i class="far fa-trash-alt" data-index="${task.index}"></i></div>
-                  <div class="threeDots show" data-index="${task.index}"><i class="fas fa-ellipsis-v" data-index="${task.index}"></i></div>
-                  </div>
-              </li>`;
-};
 
 export function addCheckListener() {
   const checkBoxes = document.querySelectorAll('.markTaskCheckbox');
@@ -68,15 +53,6 @@ function addDotsListener() {
   });
 }
 
-function updateTaskName(taskInd, newName) {
-  let allTasks = getFromLocalStorage('tasks') || [];
-  const thisTask = allTasks.find((t) => t.index === taskInd);
-  thisTask.description = newName;
-  allTasks = allTasks.filter((t) => t.index !== taskInd);
-  allTasks.push(thisTask);
-  saveToLocalStorage('tasks', allTasks.sort((a, b) => a.index - b.index));
-}
-
 export function addContentChangeFeature() {
   const allDOMTaskNames = document.querySelectorAll('.taskName');
   allDOMTaskNames.forEach((tn) => {
@@ -114,15 +90,6 @@ export function displayTasks(tasksArr = getFromLocalStorage('tasks') || []) {
   addContentChangeFeature();
   addDotsListener();
   dragListener(displayTasks);
-}
-
-function clearCompletedTasks() {
-  let allTasks = getFromLocalStorage('tasks') || [];
-  if (allTasks.length > 0) {
-    allTasks = allTasks.filter((t) => !t.completed);
-    allTasks = updateIndexes(allTasks);
-    saveToLocalStorage('tasks', allTasks);
-  }
 }
 
 const { addTaskForm } = document.forms;
