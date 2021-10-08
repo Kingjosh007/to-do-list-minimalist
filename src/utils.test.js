@@ -1,4 +1,6 @@
-import { addTask, deleteTask, deepEqual } from './utils.js';
+import {
+  addTask, deleteTask, updateTaskName, deepEqual,
+} from './utils.js';
 import { getFromLocalStorage } from './storage.js';
 
 function storageMock() {
@@ -110,5 +112,49 @@ describe('Delete task from localStorage', () => {
     expect(() => deleteTask(tasks.length + 1)).toThrow(/INVALID_INDEX/);
     expect(() => deleteTask('2')).toThrow(Error);
     expect(() => deleteTask('2')).toThrow(/INVALID_INDEX/);
+  });
+});
+
+describe('Edit task name', () => {
+  test('update name based on index and newName', () => {
+    const tasks = ['task1', 'task2', 'task whatever', 'read book', 'eat something', 'play a game'];
+    tasks.forEach((task) => addTask(task));
+    const index = 5;
+    const name = tasks[index - 1];
+    const newName = 'eat dinner';
+    updateTaskName(index, newName);
+    const allTasks = getFromLocalStorage('tasks');
+
+    expect(allTasks.find((t) => t.index === index).description).not.toBe(name);
+    expect(allTasks.find((t) => t.index === index).description).toBe(newName);
+  });
+
+  test('does not alter indexes nor rearrange array of tasks', () => {
+    const tasks = ['task1', 'task2', 'task whatever', 'read book', 'eat something', 'play a game'];
+    tasks.forEach((task) => addTask(task));
+    const index = 2;
+    const newName = 'eat dinner';
+    const allTasksBefore = getFromLocalStorage('tasks');
+    updateTaskName(index, newName);
+    const allTasksAfter = getFromLocalStorage('tasks');
+
+    expect(allTasksBefore.map((t) => t.index).join(' ')).toBe(allTasksAfter.map((t) => t.index).join(' '));
+  });
+
+  test('throws an error when index is not a number', () => {
+    const tasks = ['task1', 'task2', 'task whatever'];
+    tasks.forEach((task) => addTask(task));
+    const obj = { index: 2 };
+    expect(() => updateTaskName('2', 'whatever')).toThrow(Error);
+    expect(() => updateTaskName('2', 'whatever')).toThrow(/INVALID_PARAMETER/);
+    expect(() => updateTaskName(obj, 'whatever')).toThrow(Error);
+    expect(() => updateTaskName(obj, 'whatever')).toThrow(/INVALID_PARAMETER/);
+  });
+
+  test('throws an error when updating unexisting task (index)', () => {
+    const tasks = ['task1', 'task2', 'task whatever'];
+    tasks.forEach((task) => addTask(task));
+    expect(() => updateTaskName(tasks.length + 1, 'whatever')).toThrow(Error);
+    expect(() => updateTaskName(tasks.length + 1, 'whatever')).toThrow(/UNEXISTING_TASK/);
   });
 });

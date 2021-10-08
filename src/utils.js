@@ -26,11 +26,17 @@ function deleteTask(index) {
 
 function updateTaskName(taskInd, newName) {
   let allTasks = getFromLocalStorage('tasks') || [];
-  const thisTask = allTasks.find((t) => t.index === taskInd);
-  thisTask.description = newName;
-  allTasks = allTasks.filter((t) => t.index !== taskInd);
-  allTasks.push(thisTask);
-  saveToLocalStorage('tasks', allTasks.sort((a, b) => a.index - b.index));
+  if (typeof taskInd !== 'number') {
+    throw new Error('INVALID_PARAMETER: You should use a task index (number) as first parameter');
+  } else if (taskInd > allTasks.length) {
+    throw new Error('UNEXISTING_TASK: You are passing an index that does not exist.');
+  } else {
+    const thisTask = allTasks.find((t) => t.index === taskInd);
+    thisTask.description = newName;
+    allTasks = allTasks.filter((t) => t.index !== taskInd);
+    allTasks.push(thisTask);
+    saveToLocalStorage('tasks', allTasks.sort((a, b) => a.index - b.index));
+  }
 }
 
 function clearCompletedTasks() {
