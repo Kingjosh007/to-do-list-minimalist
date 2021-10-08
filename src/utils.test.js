@@ -1,4 +1,4 @@
-import { addTask, deleteTask } from './utils.js';
+import { addTask, deleteTask, deepEqual } from './utils.js';
 import { getFromLocalStorage } from './storage.js';
 
 function storageMock() {
@@ -79,6 +79,29 @@ describe('Delete task from localStorage', () => {
     const tasksAfterDeletion = getFromLocalStorage('tasks');
     const tasksNamesAfterDeletion = tasksAfterDeletion.map((t) => t.description);
     expect(tasksNamesAfterDeletion).not.toContain('task1');
+  });
+  test('deletes exactly one task when index is valid', () => {
+    const tasks = ['task1', 'task2', 'task whatever', 'read book', 'eat something', 'play a game'];
+    tasks.forEach((task) => addTask(task));
+    deleteTask(1);
+    const tasksAfterDeletion = getFromLocalStorage('tasks');
+    expect(tasksAfterDeletion.length).toBe(tasks.length - 1);
+  });
+  test('updates indexes after deletion', () => {
+    const tasks = ['task1', 'task2', 'task whatever', 'read book', 'eat something', 'play a game'];
+    tasks.forEach((task) => addTask(task));
+    const tbd = getFromLocalStorage('tasks');
+    const indexToDelete = 4;
+    deleteTask(indexToDelete);
+    const tasksAfterDeletion = getFromLocalStorage('tasks');
+    const tbdi = tbd.filter((t) => t.index < indexToDelete);
+    const tadi = tbdi.filter((t) => t.index > indexToDelete);
+    expect(() => tbdi.every((t, i) => deepEqual(tasksAfterDeletion[i], t))).toBeTruthy();
+    const ua = tadi.every((t) => {
+      const b = t.index === (tbd.find((tt) => tt.description === t.description).index - 1);
+      return b;
+    });
+    expect(ua).toBeTruthy();
   });
   test('throws an error when trying to delete unvalid index', () => {
     const tasks = ['task1', 'task2', 'task whatever', 'read book', 'eat something', 'play a game'];

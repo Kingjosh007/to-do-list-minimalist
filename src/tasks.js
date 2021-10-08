@@ -1,7 +1,9 @@
 import {
-  saveToLocalStorage, getFromLocalStorage, updateTaskCompletion, updateIndexes,
+  saveToLocalStorage, getFromLocalStorage, updateTaskCompletion,
 } from './storage.js';
-import { addTask, deleteTask } from './utils.js';
+import {
+  addTask, deleteTask, updateTaskName, clearCompletedTasks,
+} from './utils.js';
 import { dragListener } from './drag-drop.js';
 
 const codeForTask = (task, i, tasks) => {
@@ -68,15 +70,6 @@ function addDotsListener() {
   });
 }
 
-function updateTaskName(taskInd, newName) {
-  let allTasks = getFromLocalStorage('tasks') || [];
-  const thisTask = allTasks.find((t) => t.index === taskInd);
-  thisTask.description = newName;
-  allTasks = allTasks.filter((t) => t.index !== taskInd);
-  allTasks.push(thisTask);
-  saveToLocalStorage('tasks', allTasks.sort((a, b) => a.index - b.index));
-}
-
 export function addContentChangeFeature() {
   const allDOMTaskNames = document.querySelectorAll('.taskName');
   allDOMTaskNames.forEach((tn) => {
@@ -114,15 +107,6 @@ export function displayTasks(tasksArr = getFromLocalStorage('tasks') || []) {
   addContentChangeFeature();
   addDotsListener();
   dragListener(displayTasks);
-}
-
-function clearCompletedTasks() {
-  let allTasks = getFromLocalStorage('tasks') || [];
-  if (allTasks.length > 0) {
-    allTasks = allTasks.filter((t) => !t.completed);
-    allTasks = updateIndexes(allTasks);
-    saveToLocalStorage('tasks', allTasks);
-  }
 }
 
 const { addTaskForm } = document.forms;
