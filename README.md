@@ -37,9 +37,9 @@ To get a local copy of this project, do the following:
 
 ![Screenshot after milestone 3: Add, edit, remove](screenshots/screenshot-3.gif)
 
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; **Tests (using Jest)**
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; **Tests (using Jest)**
 
-![Screenshot after milestone 4: Testing add and delete using Jest](screenshots/screenshot-4.gif)
+![Screenshot after milestone 5: All tests using Jest](screenshots/screenshot-5.PNG)
 
 ## Built With
 
