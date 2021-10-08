@@ -1,7 +1,7 @@
 import {
-  addTask, deleteTask, updateTaskName, deepEqual,
+  addTask, deleteTask, updateTaskName, clearCompletedTasks, deepEqual,
 } from './utils.js';
-import { getFromLocalStorage, updateTaskCompletion } from './storage.js';
+import { getFromLocalStorage, saveToLocalStorage, updateTaskCompletion } from './storage.js';
 
 function storageMock() {
   const storage = {};
@@ -179,9 +179,48 @@ describe('Update completed status', () => {
     tasks.forEach((task) => addTask(task));
     const index = Math.ceil(Math.random() * tasks.length);
     const oldTasks = getFromLocalStorage('tasks');
-    const tBefore = oldTasks[index];
+    const tBefore = oldTasks.find((t) => t.index === index);
+    const cpBefore = tBefore.completed;
     const newTasks = updateTaskCompletion(index, oldTasks);
     const tAfter = newTasks.find((t) => t.index === index);
-    expect(tBefore.completed === tAfter.completed).toBeFalsy();
+    expect(cpBefore).not.toBe(tAfter.completed);
+  });
+});
+
+describe('Clear all completed', () => {
+  test('clears nothing when no task in completed', () => {
+    const tasks = ['task1', 'task2', 'task whatever', 'read book', 'eat something', 'play a game'];
+    tasks.forEach((task) => addTask(task));
+    let oldTasks = getFromLocalStorage('tasks');
+    let newTasks = oldTasks;
+    oldTasks.forEach((t) => {
+      if (t.completed) {
+        newTasks = updateTaskCompletion(t.index, newTasks);
+      }
+    });
+    saveToLocalStorage('tasks', newTasks);
+    oldTasks = getFromLocalStorage('tasks');
+    clearCompletedTasks();
+    newTasks = getFromLocalStorage('tasks');
+    expect(newTasks.every((t, i) => deepEqual(t, oldTasks[i]))).toBeTruthy();
+  });
+  test('clears all completed tasks', () => {
+    const tasks = ['task1', 'task2', 'task whatever', 'read book', 'eat something', 'play a game', 'do something else'];
+    tasks.forEach((task) => addTask(task));
+    let allTasks = getFromLocalStorage('tasks');
+    const nbToMark = Math.ceil(Math.random() * tasks.length);
+    for (let i = 1; i <= nbToMark; i += 1) {
+      const randomIndex = Math.ceil(Math.random() * tasks.length);
+      allTasks = updateTaskCompletion(randomIndex, allTasks);
+    }
+    saveToLocalStorage('tasks', allTasks);
+    const oldTasks = getFromLocalStorage('tasks');
+    const oldCptedTasks = oldTasks.filter((t) => t.completed);
+    const oldCptedTasksNames = oldCptedTasks.map((t) => t.description);
+    clearCompletedTasks();
+    const newTasks = getFromLocalStorage('tasks');
+    const newTasksNames = newTasks.map((t) => t.description);
+    expect(newTasks.every((t) => !t.completed)).toBeTruthy();
+    expect(oldCptedTasksNames.every((tn) => !newTasksNames.includes(tn))).toBeTruthy();
   });
 });
